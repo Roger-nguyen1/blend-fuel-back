@@ -4,7 +4,7 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
-require("./models/connection");
+var db = require("./models/connection");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -22,5 +22,16 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+
+async function startServer() {
+  try {
+    await db.connect();
+    console.log("La connexion à la base de données a réussi !");
+  } catch (err) {
+    console.error("La connexion à la base de données a échoué", err);
+  }
+}
+
+startServer();
 
 module.exports = app;

@@ -1,6 +1,15 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
 const bcrypt = require("bcrypt");
-const sequelize = new Sequelize("mysql::memory:");
+
+const sequelize = new Sequelize(
+  process.env.DB_DATABASE,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
+  {
+    host: process.env.DB_HOST,
+    dialect: "mysql",
+  }
+);
 
 class User extends Model {}
 
@@ -40,18 +49,4 @@ User.init(
   }
 );
 
-// Dans votre route Express pour créer un nouvel utilisateur
-// app.post("/users", async (req, res) => {
-//   try {
-//     const newUser = await User.create(req.body);
-//     res.json(newUser);
-//   } catch (err) {
-//     console.error(err);
-//     res
-//       .status(500)
-//       .json({
-//         message:
-//           "Une erreur est survenue lors de la création de l'utilisateur.",
-//       });
-//   }
-// });
+module.exports = User;
