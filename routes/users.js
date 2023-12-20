@@ -7,7 +7,7 @@ router.get("/", function (req, res, next) {
   res.send("respond with a resource");
 });
 
-// POST /create for creating a user
+// POST users/create for creating a user
 router.post("/create", async (req, res) => {
   const { pseudo, email, mot_de_passe } = req.body;
 
